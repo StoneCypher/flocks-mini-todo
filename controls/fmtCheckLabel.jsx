@@ -10,7 +10,7 @@ var fmtCheckLabel = React.createClass({
   render: function() {
 
     return (
-      <span className="fmtCheckLabel"><input type="checkbox" onChange={this.props.changeHandler} /> {this.props.label}</span>
+      <span className="fmtCheckLabel"><input type="checkbox" checked={this.props.checked} onChange={this.props.changeHandler} /> {this.props.label}</span>
     );
   }
 
