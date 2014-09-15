@@ -18,7 +18,7 @@ var fmtApp = React.createClass({
 
       Rows.push(
         <tr className={IfOverdue}>
-          <td><a className="remove" href="javascript:void(0)">&#x2717;</a> <a className="complete" href="javascript:void(0)">&#x2713;</a></td>
+          <fmtClearCell />
           <td>{Item.item}</td>
           <td><a href="javascript:void(0)">&darr;</a> {(typeof Item.priority === 'undefined')? 0 : Item.priority} <a href="javascript:void(0)">&uarr;</a></td>
           <fmtDueCell due={Item.due} />
