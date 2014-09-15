@@ -54,8 +54,8 @@ var fmtApp = React.createClass({
 
     return (
       <div id="main">
-        <fmtTopBar showdeleted={this.props.config.showdeleted} />
-        <fmtTodoTable showdeleted={this.props.config.showdeleted} rowdata={SortedRows} />
+        <fmtTopBar showdone={this.props.config.showdone} showdeleted={this.props.config.showdeleted} />
+        <fmtTodoTable showdone={this.props.config.showdone} showdeleted={this.props.config.showdeleted} rowdata={SortedRows} />
       </div>
     );
 

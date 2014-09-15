@@ -16,6 +16,11 @@ tr.done td.duecell,
 tr+tr.done:hover td    { opacity: 0.4; background-color: #dfd; font-weight: 300; color: black; }
 tr+tr.done:hover td    { opacity: 1; }
 
+tr.deleted td,
+tr.deleted td.duecell,
+tr+tr.deleted:hover td { opacity: 0.4; background-color: #ddd; font-weight: 300; color: #555; }
+tr+tr.deleted:hover td { opacity: 1; }
+
 th, td                 { margin: 0; padding: 0.25em 0 0.25em 0.5em; font-weight: 300; text-align: center; }
 th+th, td+td           { padding: 0.25em 0.5em 0.25em 1em; text-align: left; }
 th                     { padding: 0.5em 1em; font-weight: 300; border-bottom: thin solid #bbb; color: #888; }
@@ -29,5 +34,6 @@ a.remove               { color: #f00; }
 a.complete             { color: #080; }
 
 .clearCell a           { padding-left: 0.15em; padding-right: 0.15em; }
-
 .itemCell a            { color: black; opacity: 1; }
+
+.fmtCheckLabel         { margin-left: 0.5em; }

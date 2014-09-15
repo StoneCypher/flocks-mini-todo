@@ -24,7 +24,7 @@ var fmtClearCell = React.createClass({
 
     return (
       <td className="clearCell">
-        <a className="remove" href="javascript:void(0)">&#x2717;</a>
+        <a className="remove" href="javascript:void(0)" onClick={toggleDeleted}>&#x2717;</a>
         <a className="complete" href="javascript:void(0)" onClick={toggleDone}>&#x2713;</a>
       </td>
     );
