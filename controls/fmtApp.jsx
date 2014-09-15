@@ -1,4 +1,7 @@
 /** @jsx React.DOM */
+/* jshint node: true */
+
+'use strict';
 
 var fmtApp = React.createClass({
 
@@ -7,14 +10,18 @@ var fmtApp = React.createClass({
   makeRows: function(InData) {
 
     var Rows = [];
+    var Now  = new Date().getTime();
 
     InData.map(function(Item) {
 
+      var IfOverdue = (Item.due < Now)? 'overdue' : undefined;
+
       Rows.push(
-        <tr>
+        <tr className={IfOverdue}>
+          <td><a className="remove" href="javascript:void(0)">&#x2717;</a> <a className="complete" href="javascript:void(0)">&#x2713;</a></td>
           <td>{Item.item}</td>
-          <td>{Item.priority}</td>
-          <td>{new Date(Item.due).toString()}</td>
+          <td><a href="javascript:void(0)">&darr;</a> {(typeof Item.priority === 'undefined')? 0 : Item.priority} <a href="javascript:void(0)">&uarr;</a></td>
+          <fmtDueCell due={Item.due} />
         </tr>
       );
 
@@ -81,6 +88,7 @@ var fmtApp = React.createClass({
       <table><tbody>
 
         <tr>
+          <th></th>
           <th>Item</th>
           <th>Priority</th>
           <th>Due date</th>

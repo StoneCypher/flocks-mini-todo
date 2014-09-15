@@ -1,4 +1,7 @@
 /** @jsx React.DOM */
+/* jshint node: true */
+
+'use strict';
 
 var fmtRow = React.createClass({
 

@@ -1,5 +1,18 @@
-html, body { margin: 0; padding: 0; border: 0; }
-body       { padding: 2em; font-family: 'Open Sans', sans-serif; }
-table      { border-collapse: collapse; }
-th, td     { margin: 0; padding: 0.25em 1em; font-weight: 300; text-align: left; }
-th         { padding: 0.5em 1em; font-weight: 600; }
+html, body       { margin: 0; padding: 0; border: 0; }
+body             { padding: 2em; font-family: 'Open Sans', sans-serif; }
+table            { border-collapse: collapse; }
+
+tr.overdue td    { background-color: #ffeeee; }
+tr+tr:hover      { background-color: #f8f8f8; }
+
+th, td           { margin: 0; padding: 0.25em 0.75em 0.25em 0.5em; font-weight: 300; text-align: center; }
+th+th, td+td     { padding: 0.25em 1.75em 0.25em 0; text-align: left; }
+th               { padding: 0.5em 1em; font-weight: 600; }
+
+a                { color: #4488ff; text-decoration: none; }
+a:hover          { color: #0000ff; }
+
+a.remove         { color: #800; }
+a.remove:hover   { color: #f00; }
+a.complete       { color: #080; }
+a.complete:hover { color: #0d0; }
