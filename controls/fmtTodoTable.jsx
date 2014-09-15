@@ -11,14 +11,19 @@ var fmtTodoTable = React.createClass({
 
   makeRows: function(InData) {
 
-    var Rows = [];
-    var Now  = new Date().getTime();
+    var Rows = [],
+        Now  = new Date().getTime(),
+        sdel = this.props.showdeleted || false;
+
+console.log('sdel: ' + sdel);
 
     InData.map(function(Item, Idx) {
 
-      Rows.push(
-        <fmtRow index={Idx} done={Item.done} overdue={Item.due < Now} item={Item.item} priority={Item.priority} due={Item.due} />
-      );
+      if (sdel || !Item.deleted) {
+        Rows.push(
+          <fmtRow index={Idx} done={Item.done} overdue={Item.due < Now} item={Item.item} priority={Item.priority} due={Item.due} />
+        );
+      }
 
     });
 

@@ -16,7 +16,9 @@ var TempData = {
       { item: 'Get coffee',     priority: 8, due: new Date().getTime() + 4*60*60*1000 },
 
       { item: 'Fin homework 1', priority: 4, due: new Date().getTime() - 6.332*24*60*60*1000, done: true },
-      { item: 'Fin homework 2', priority: 4, due: new Date().getTime() + 6.332*24*60*60*1000, done: true }
+      { item: 'Fin homework 2', priority: 4, due: new Date().getTime() + 6.332*24*60*60*1000, done: true },
+
+      { item: 'Del homework',   priority: 4, due: new Date().getTime() + 6.332*24*60*60*1000, deleted: true }
 
     ]
 
