@@ -9,13 +9,25 @@ var fmtPriorityCell = React.createClass({
 
   render: function() {
 
+    var uf    = this.context.updater.set,
+        index = this.props.index,
+        prio  = this.props.priority || 0,
+
+        upPriority = function() {
+          uf( ['data', 'todoList', index, 'priority'], prio+1 );
+        },
+
+        downPriority = function() {
+          uf( ['data', 'todoList', index, 'priority'], prio-1 );
+        };
+
     return (
       <td>
-        <a href="javascript:void(0)">&darr;</a>
+        <a href="javascript:void(0)" onClick={downPriority}>&darr;</a>
         &#x2005;
-        {(typeof this.props.priority === 'undefined')? 0 : this.props.priority}
+        {prio}
         &#x2005;
-        <a href="javascript:void(0)">&uarr;</a>
+        <a href="javascript:void(0)" onClick={upPriority}>&uarr;</a>
       </td>
     );
 
