@@ -1,0 +1,5 @@
+html, body { margin: 0; padding: 0; border: 0; }
+body       { padding: 2em; font-family: 'Open Sans', sans-serif; }
+table      { border-collapse: collapse; }
+th, td     { margin: 0; padding: 0.25em 1em; font-weight: 300; text-align: left; }
+th         { padding: 0.5em 1em; font-weight: 600; }
