@@ -20,7 +20,7 @@ var fmtApp = React.createClass({
         <tr className={IfOverdue}>
           <fmtClearCell />
           <td>{Item.item}</td>
-          <td><a href="javascript:void(0)">&darr;</a> {(typeof Item.priority === 'undefined')? 0 : Item.priority} <a href="javascript:void(0)">&uarr;</a></td>
+          <fmtPriorityCell priority={Item.priority} />
           <fmtDueCell due={Item.due} />
         </tr>
       );
@@ -34,36 +34,16 @@ var fmtApp = React.createClass({
 
 
 
-  undefComp: function(X,Y) {
-
-    return (X === undefined)? (
-      ( (Y === undefined)?  0 : 1       )
-    ) : (
-      ( (Y === undefined)? -1 : ((X === Y)? 0 : ((X < Y)? -1 : 1)) )
-    );
-
-  },
-
-
-
-  undefDescComp: function(X,Y) {
-
-    return (X === undefined)? (
-      ( (Y === undefined)?  0 : 1       )
-    ) : (
-      ( (Y === undefined)? -1 : ((X === Y)? 0 : ((X < Y)? 1 : -1)) )
-    );
-
-  },
-
-
 
   todoPriorityPredicate: function(Left, Right) {
 
-    var pri = this.undefDescComp(Left.priority, Right.priority); if (pri !== 0) { return pri; }
-    var due = this.undefComp(    Left.due,      Right.due);      if (due !== 0) { return due; }
+    // undefComp is a sort predicate that does nice things around undefined
+    // kept in compare.js to keep visual complexity down
 
-    return this.undefComp(Left.item, Right.item);
+    var pri = undefDescComp(Left.priority, Right.priority); if (pri !== 0) { return pri; }
+    var due = undefComp(    Left.due,      Right.due);      if (due !== 0) { return due; }
+
+    return undefComp(Left.item, Right.item);
 
   },
 
@@ -90,7 +70,7 @@ var fmtApp = React.createClass({
         <tr>
           <th></th>
           <th>Item</th>
-          <th>Priority</th>
+          <th>Prio.</th>
           <th>Due date</th>
         </tr>
 

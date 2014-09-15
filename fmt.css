@@ -7,14 +7,14 @@ tr.overdue td          { background-color: #fee; }
 tr+tr.overdue:hover td { background-color: #f8e8e8; }
 tr.overdue td.duecell  { font-weight: 400; color: #800; }
 
-th, td                 { margin: 0; padding: 0.25em 0.75em 0.25em 0.5em; font-weight: 300; text-align: center; }
-th+th, td+td           { padding: 0.25em 1.75em 0.25em 0; text-align: left; }
-th                     { padding: 0.5em 1em; font-weight: 600; }
+th, td                 { margin: 0; padding: 0.25em 0 0.25em 0.5em; font-weight: 300; text-align: center; }
+th+th, td+td           { padding: 0.25em 0.5em 0.25em 1em; text-align: left; }
+th                     { padding: 0.5em 1em; font-weight: 600; border-bottom: thin solid #bbb; }
 
-a                      { color: #5af; text-decoration: none; }
-a:hover                { color: #00f; }
+a                      { opacity: 0.2; color: #04f; text-decoration: none; }
+a:hover                { opacity: 1; }
 
-a.remove               { color: #800; padding-right: 0.15em; }
-a.remove:hover         { color: #f00; }
-a.complete             { color: #080; padding-left: 0.15em; }
-a.complete:hover       { color: #0d0; }
+a.remove               { color: #f00; }
+a.complete             { color: #080; }
+
+.clearCell a           { padding-left: 0.15em; padding-right: 0.15em; }
