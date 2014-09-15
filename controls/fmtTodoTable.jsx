@@ -18,8 +18,6 @@ var fmtTodoTable = React.createClass({
 
     InData.map(function(Item, Idx) {
 
-      console.log(sdon + ',' + Item.done + ';' + sdel + ',' + Item.deleted);
-
       if ((sdon || !Item.done) && (sdel || !Item.deleted)) {
         Rows.push(
           <fmtRow index={Idx} done={Item.done} deleted={Item.deleted} overdue={Item.due < Now} item={Item.item} priority={Item.priority} due={Item.due} />
