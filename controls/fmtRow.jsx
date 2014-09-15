@@ -5,8 +5,18 @@
 
 var fmtRow = React.createClass({
 
-    render: function() {
-        return (<div>Hiya {this.props.name}</div>);
-    }
+  render: function() {
+
+    return (
+
+      <tr className={this.props.overdueClass}>
+        <fmtClearCell />
+        <td className="itemCell">{this.props.item}</td>
+        <fmtPriorityCell priority={this.props.priority} />
+        <fmtDueCell due={this.props.due} />
+      </tr>
+
+    );
+  }
 
 });

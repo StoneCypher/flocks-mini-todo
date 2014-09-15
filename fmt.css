@@ -1,15 +1,23 @@
 html, body             { margin: 0; padding: 0; border: 0; }
-body                   { padding: 2em; font-family: 'Open Sans', sans-serif; }
+body                   { padding: 4em 2em 2em 2em; font-family: 'Open Sans', sans-serif; }
 table                  { border-collapse: collapse; }
+
+#topbar                { position: fixed; top: 0; left: 0; right: 0; height: 2em; background-color: #eee; line-height: 1.8em; }
+.logo                  { float: right; margin-right: 0.5em; color: black; }
+.logo:hover            { color: #04f; }
 
 tr+tr:hover            { background-color: #f8f8f8; }
 tr.overdue td          { background-color: #fee; }
 tr+tr.overdue:hover td { background-color: #f8e8e8; }
-tr.overdue td.duecell  { font-weight: 400; color: #800; }
+tr.overdue td          { color: #800; }
+tr.overdue:hover td    { color: black; }
+tr.overdue td.duecell  { font-weight: 600; }
 
 th, td                 { margin: 0; padding: 0.25em 0 0.25em 0.5em; font-weight: 300; text-align: center; }
 th+th, td+td           { padding: 0.25em 0.5em 0.25em 1em; text-align: left; }
-th                     { padding: 0.5em 1em; font-weight: 600; border-bottom: thin solid #bbb; }
+th                     { padding: 0.5em 1em; font-weight: 300; border-bottom: thin solid #bbb; color: #888; }
+
+.itemCell              { font-weight: 400; }
 
 a                      { opacity: 0.2; color: #04f; text-decoration: none; }
 a:hover                { opacity: 1; }

@@ -7,35 +7,21 @@ var fmtApp = React.createClass({
 
 
 
-  makeRows: function(InData) {
+  todoPriorityPredicate: function(Left, Right) {
 
-    var Rows = [];
-    var Now  = new Date().getTime();
+    // undefComp is a sort predicate that does nice things around undefined
+    // kept in compare.js to keep visual complexity down
 
-    InData.map(function(Item) {
+    var pri = undefDescComp(Left.priority, Right.priority); if (pri !== 0) { return pri; }
+    var due = undefComp(    Left.due,      Right.due);      if (due !== 0) { return due; }
 
-      var IfOverdue = (Item.due < Now)? 'overdue' : undefined;
-
-      Rows.push(
-        <tr className={IfOverdue}>
-          <fmtClearCell />
-          <td>{Item.item}</td>
-          <fmtPriorityCell priority={Item.priority} />
-          <fmtDueCell due={Item.due} />
-        </tr>
-      );
-
-    });
-
-    return Rows;
+    return undefComp(Left.item, Right.item);
 
   },
 
 
 
-
-
-  todoPriorityPredicate: function(Left, Right) {
+  todoPriorityPredicateOverdueWins: function(Left, Right) {
 
     // undefComp is a sort predicate that does nice things around undefined
     // kept in compare.js to keep visual complexity down
@@ -52,7 +38,7 @@ var fmtApp = React.createClass({
   sortRows: function(OldRows) {
 
     var Rows = OldRows;
-    Rows.sort(this.todoPriorityPredicate);
+    Rows.sort(this.props.overdueWins? this.todoPriorityPredicateOverdueWins : this.todoPriorityPredicate);
 
     return Rows;
 
@@ -62,22 +48,15 @@ var fmtApp = React.createClass({
 
   render: function() {
 
-    var SortedRows = this.makeRows(this.sortRows(this.props.data.todoList));
+    var SortedRows = this.sortRows(this.props.data.todoList);
 
     return (
-      <table><tbody>
-
-        <tr>
-          <th></th>
-          <th>Item</th>
-          <th>Prio.</th>
-          <th>Due date</th>
-        </tr>
-
-        {SortedRows}
-
-      </tbody></table>
+      <div id="main">
+        <fmtTopBar />
+        <fmtTodoTable rowdata={SortedRows} />
+      </div>
     );
+
   }
 
 });
