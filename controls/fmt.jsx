@@ -11,4 +11,4 @@ var FlocksMiniTodoHost = React.createClass({
 });
 
 var Updater = window.flocksjs.create( document.getElementById('bodyid'), FlocksMiniTodoHost );
-Updater.set({updater: Updater, data: TempData, config: {showdeleted: false, showdone: false} });  // from tempdata.js
+Updater.set({updater: Updater, data: TempData, config: {showdeleted: false, showdone: true} });  // from tempdata.js
