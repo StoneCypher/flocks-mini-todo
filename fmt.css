@@ -2,16 +2,19 @@ html, body             { margin: 0; padding: 0; border: 0; }
 body                   { padding: 4em 2em 2em 2em; font-family: 'Open Sans', sans-serif; }
 table                  { border-collapse: collapse; }
 
-#topbar                { position: fixed; top: 0; left: 0; right: 0; height: 2em; background-color: #eee; line-height: 1.8em; }
+#topbar                { position: fixed; top: 0; left: 0; right: 0; height: 2em; background-color: #eee; line-height: 1.9em; }
 .logo                  { float: right; margin-right: 0.5em; color: black; }
 .logo:hover            { color: #04f; }
 
 tr+tr:hover            { background-color: #f8f8f8; }
-tr.overdue td          { background-color: #fee; }
-tr+tr.overdue:hover td { background-color: #f8e8e8; }
-tr.overdue td          { color: #800; }
-tr.overdue:hover td    { color: black; }
+tr.overdue td          { color: #800; background-color: #fee; }
 tr.overdue td.duecell  { font-weight: 600; }
+tr+tr.overdue:hover td { color: black; background-color: #f8e8e8; }
+
+tr.done td,
+tr.done td.duecell,
+tr+tr.done:hover td    { opacity: 0.4; background-color: #dfd; font-weight: 300; color: black; }
+tr+tr.done:hover td    { opacity: 1; }
 
 th, td                 { margin: 0; padding: 0.25em 0 0.25em 0.5em; font-weight: 300; text-align: center; }
 th+th, td+td           { padding: 0.25em 0.5em 0.25em 1em; text-align: left; }
@@ -26,3 +29,5 @@ a.remove               { color: #f00; }
 a.complete             { color: #080; }
 
 .clearCell a           { padding-left: 0.15em; padding-right: 0.15em; }
+
+.itemCell a            { color: black; opacity: 1; }

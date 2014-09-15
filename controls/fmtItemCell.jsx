@@ -3,19 +3,16 @@
 
 'use strict';
 
-var fmtHeaderRow = React.createClass({
+var fmtItemCell = React.createClass({
 
   mixins: [ window.flocksjs.member ],
 
   render: function() {
 
     return (
-      <tr>
-        <th></th>
-        <th>Item</th>
-        <th>Prio.</th>
-        <th>Due date</th>
-      </tr>
+      <td className="itemCell">
+        <a href="javascript:void(0)">{this.props.item}</a>
+      </td>
     );
 
   }

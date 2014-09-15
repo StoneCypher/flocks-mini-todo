@@ -5,6 +5,8 @@
 
 var fmtTodoTable = React.createClass({
 
+  mixins: [ window.flocksjs.member ],
+
 
 
   makeRows: function(InData) {
@@ -12,12 +14,10 @@ var fmtTodoTable = React.createClass({
     var Rows = [];
     var Now  = new Date().getTime();
 
-    InData.map(function(Item) {
-
-      var IfOverdue = (Item.due < Now)? 'overdue' : undefined;
+    InData.map(function(Item, Idx) {
 
       Rows.push(
-        <fmtRow overdueClass={IfOverdue} item={Item.item} priority={Item.priority} due={Item.due} />
+        <fmtRow index={Idx} done={Item.done} overdue={Item.due < Now} item={Item.item} priority={Item.priority} due={Item.due} />
       );
 
     });

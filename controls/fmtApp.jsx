@@ -5,6 +5,8 @@
 
 var fmtApp = React.createClass({
 
+  mixins: [ window.flocksjs.member ],
+
 
 
   todoPriorityPredicate: function(Left, Right) {

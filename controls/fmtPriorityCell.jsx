@@ -5,6 +5,8 @@
 
 var fmtPriorityCell = React.createClass({
 
+  mixins: [ window.flocksjs.member ],
+
   render: function() {
 
     return (

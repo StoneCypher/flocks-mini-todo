@@ -5,6 +5,8 @@
 
 var fmtTopBar = React.createClass({
 
+  mixins: [ window.flocksjs.member ],
+
   render: function() {
 
     return (
