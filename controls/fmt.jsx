@@ -10,5 +10,8 @@ var FlocksMiniTodoHost = React.createClass({
 
 });
 
-var Updater = window.flocksjs.create( document.getElementById('bodyid'), FlocksMiniTodoHost );
-Updater.set({updater: Updater, data: TempData, config: {showdeleted: false, showdone: true} });  // from tempdata.js
+var Handler      = function(X) { return true; }
+var Updater      = window.flocksjs.create( document.getElementById('bodyid'), FlocksMiniTodoHost, Handler );
+var InitialState = {updater: Updater, data: TempData, config: {showdeleted: false, showdone: true} };
+
+Updater.set(InitialState);  // from tempdata.js

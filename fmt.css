@@ -1,5 +1,5 @@
 html, body             { margin: 0; padding: 0; border: 0; }
-body                   { padding: 4em 2em 2em 2em; font-family: 'Open Sans', sans-serif; }
+body                   { padding: 3em 2em 2em 2em; font-family: 'Open Sans', sans-serif; }
 table                  { border-collapse: collapse; }
 
 #topbar                { position: fixed; top: 0; left: 0; right: 0; height: 2em; background-color: #eee; line-height: 1.9em; }
@@ -37,3 +37,5 @@ a.complete             { color: #080; }
 .itemCell a            { color: black; opacity: 1; }
 
 .fmtCheckLabel         { margin-left: 0.5em; }
+
+#emptyTrash            { margin-left: 0.5em; }

@@ -27,6 +27,10 @@ var fmtTopBar = React.createClass({
         <a target="_blank" href="https://github.com/StoneCypher/flocks-mini-todo" className="logo">Flocks Mini-Todo</a>
         <fmtCheckLabel checked={this.props.showdone} label="Show completed" changeHandler={toggleShowDone} />
         <fmtCheckLabel checked={this.props.showdeleted} label="Show deleted" changeHandler={toggleShowDeleted} />
+        { this.props.showdeleted?
+          <button id="emptyTrash">Empty Trash</button>
+          : ''
+        }
       </div>
     );
 

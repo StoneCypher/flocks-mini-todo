@@ -114,7 +114,7 @@ var flContextTypes = {
 
             setByObject = function(NaObject) {
                 enforceNonArrayObject(NaObject, 'Flocks.bulk_set takes an object', 'Flocks.bulk_set takes a non-array object');
-                if (handler(NaObject)) {
+                if (handler({kind: 'set by object', NaObject: NaObject})) {
                     currentData = NaObject;
                 }
                 updateIfWanted();
@@ -122,7 +122,9 @@ var flContextTypes = {
 
             setByPath = function(Path, Value) {
                 enforceArray(Path, 'Flock.path_set must take an array for its path');
-                return pathSet(Path, currentData, Value);
+                if (handler({kind: 'set by path', path: Path, value: Value})) {
+                    return pathSet(Path, currentData, Value);
+                }
             },
 
             setByKey = function(Key, Value) {
