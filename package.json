@@ -1,0 +1,30 @@
+{
+  "author": "John Haugeland",
+  "name": "flocks-mini-todo",
+  "description": "A todo list example app built in Flocks.js and React.js",
+  "version": "0.1.7",
+  "repository": {
+    "url": "https://github.com/StoneCypher/flocks-mini-todo.git"
+  },
+  "keywords": [
+    "state",
+    "react",
+    "react.js",
+    "flux",
+    "flocks",
+    "flocks.js",
+    "flock",
+    "flocks-mini-todo"
+  ],
+  "main": "controls/flocks-mini-todo.js",
+  "dependencies": {
+    "react": "*",
+    "flocks.js": "*"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "vows test/* --spec"
+  }
+}
