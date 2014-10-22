@@ -18,9 +18,7 @@
   ],
   "main": "controls/flocks-mini-todo.js",
   "dependencies": {
-    "react": "*",
-    "vows": "*",
-    "flocks.js": "*"
+    "vows": "*"
   },
   "engines": {
     "node": "*"

@@ -8,9 +8,10 @@ if (typeof React === 'undefined') {
 }
 
 var flContextTypes = {
-        root    : React.PropTypes.object,
-        depth   : React.PropTypes.number,
-        updater : React.PropTypes.object
+        root       : React.PropTypes.object,
+        depth      : React.PropTypes.number,
+        updater    : React.PropTypes.object,
+        flocks_ctx : React.PropTypes.object
     },
 
     Mixin = {
@@ -44,12 +45,16 @@ var flContextTypes = {
         }
     },
 
-    create = function(TargetTag, RenderDescriptor, ProvidedHandler) {
+    create = function(Options) {
 
-        var currentData    = {},
-            updatesBlocked = false,
-            dirty          = false,
-            handler        = ProvidedHandler || function() { return true; },
+        var currentData      = {},
+            updatesBlocked   = false,
+            dirty            = false,
+
+            handler          = Options.before || function() { return true; },
+            finalizer        = Options.after  || function() { return; },
+            TargetTag        = Options.target,
+            RenderDescriptor = Options.control,
 
             isArray = function(maybeArray) {
                 return (Object.prototype.toString.call(maybeArray) === "[object Array]");
@@ -86,8 +91,22 @@ var flContextTypes = {
                 if (updatesBlocked) {
                     dirty = true;
                 } else {
-                    React.renderComponent(RenderDescriptor(currentData), TargetTag);
+
+                    var clone = function(obj) {
+                            if (null == obj || "object" != typeof obj) return obj;
+                            var copy = obj.constructor();
+                            for (var attr in obj) {
+                                if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+                            }
+                            return copy;
+                        }, // oh, javascript :|
+
+                        cdata            = clone(currentData);
+                        cdata.flocks_ctx = currentData;
+
+                    React.renderComponent(RenderDescriptor(cdata), TargetTag);
                     dirty = false;
+
                 }
             },
 
@@ -114,7 +133,7 @@ var flContextTypes = {
 
             setByObject = function(NaObject) {
                 enforceNonArrayObject(NaObject, 'Flocks.bulk_set takes an object', 'Flocks.bulk_set takes a non-array object');
-                if (handler({kind: 'set by object', NaObject: NaObject})) {
+                if (handler(NaObject)) {
                     currentData = NaObject;
                 }
                 updateIfWanted();
@@ -122,9 +141,7 @@ var flContextTypes = {
 
             setByPath = function(Path, Value) {
                 enforceArray(Path, 'Flock.path_set must take an array for its path');
-                if (handler({kind: 'set by path', path: Path, value: Value})) {
-                    return pathSet(Path, currentData, Value);
-                }
+                return pathSet(Path, currentData, Value);
             },
 
             setByKey = function(Key, Value) {
@@ -141,6 +158,9 @@ var flContextTypes = {
                 return;
             };
 
+        if (typeof TargetTag        === 'undefined') { throw 'flocks fatal error: must set a target'; }
+        if (typeof RenderDescriptor === 'undefined') { throw 'flocks fatal error: must set a control'; }
+
         // todo whargarbl what're docs lol
 
         return {
@@ -153,15 +173,11 @@ var flContextTypes = {
 
             set: function(Key, Value) {
 
-                if (typeof Key === 'string') {
-                    setByKey(Key, Value);
-                } else if (isArray(Key)) {
-                    setByPath(Key, Value);
-                } else if (isNonArrayObject(Key)) {
-                    setByObject(Key);
-                } else {
-                    throw "Flocks.set/2 key must be a string or an array";
-                }
+                if      (typeof Key === 'string') { setByKey(Key, Value); }
+                else if (isArray(Key))            { setByPath(Key, Value); }
+                else if (isNonArrayObject(Key))   { setByObject(Key); }
+                else                              { throw "Flocks.set/2 key must be a string or an array"; }
+
             },
 
             // get isn't subject to handling
