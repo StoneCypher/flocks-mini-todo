@@ -10,7 +10,6 @@ var fmtTopBar = React.createClass({
   render: function() {
 
     var uf          = this.context.flocks_updater.set,
-        done        = this.props.done,
         showdone    = this.props.showdone,
         showdeleted = this.props.showdeleted,
 

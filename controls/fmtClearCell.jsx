@@ -10,9 +10,12 @@ var fmtClearCell = React.createClass({
   render: function() {
 
     var uf      = this.context.flocks_updater.set,
+
         index   = this.props.index,
-        done    = this.fctx().todoList[index].done,
-        deleted = this.fctx().todoList[index].deleted,
+        item    = this.fctx().todoList[index],
+
+        done    = item.done,
+        deleted = item.deleted,
 
         toggleDone = function() {
           uf( ['data', 'todoList', index, 'done'], !done );

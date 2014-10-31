@@ -11,7 +11,8 @@ var fmtPriorityCell = React.createClass({
 
     var uf    = this.context.flocks_updater.set,
         index = this.props.index,
-        prio  = this.fctx().todoList[index].priority || 0,
+        item  = this.fctx().todoList[index],
+        prio  = item.priority || 0,
 
         upPriority = function() {
           uf( ['data', 'todoList', index, 'priority'], prio+1 );
@@ -24,9 +25,7 @@ var fmtPriorityCell = React.createClass({
     return (
       <td>
         <a href="javascript:void(0)" onClick={downPriority}>&darr;</a>
-        &#x2005;
-        {prio}
-        &#x2005;
+        &#x2005;{prio}&#x2005;
         <a href="javascript:void(0)" onClick={upPriority}>&uarr;</a>
       </td>
     );

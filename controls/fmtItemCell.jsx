@@ -9,9 +9,11 @@ var fmtItemCell = React.createClass({
 
   render: function() {
 
+    var itemText = this.fctx().todoList[this.props.index].item;
+
     return (
       <td className="itemCell">
-        <a href="javascript:void(0)">{this.fctx().todoList[this.props.index].item}</a>
+        <a href="javascript:void(0)">{itemText}</a>
       </td>
     );
 
