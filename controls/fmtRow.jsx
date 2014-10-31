@@ -9,13 +9,20 @@ var fmtRow = React.createClass({
 
   render: function() {
 
+    var index     = this.props.index,
+        done      = this.fctx().todoList[index].done    || false,
+        due       = this.fctx().todoList[index].due     || undefined,
+        deleted   = this.fctx().todoList[index].deleted || false,
+        overdue   = due? (due < (new Date().getTime())) : false,
+        className = (done? 'done ' : '') + (deleted? 'deleted ' : '') + (overdue? 'overdue' : '');
+
     return (
 
-      <tr className={(this.props.done? 'done ' : '') + (this.props.deleted? 'deleted ' : '') + (this.props.overdue? 'overdue' : '')}>
-        <fmtClearCell index={this.props.index} done={this.props.done} deleted={this.props.deleted} />
-        <fmtItemCell item={this.props.item} />
-        <fmtPriorityCell index={this.props.index} priority={this.props.priority} />
-        <fmtDueCell index={this.props.index} due={this.props.due} />
+      <tr className={className}>
+        <fmtClearCell index={this.props.index} />
+        <fmtItemCell index={this.props.index} />
+        <fmtPriorityCell index={this.props.index} />
+        <fmtDueCell index={this.props.index} />
       </tr>
 
     );

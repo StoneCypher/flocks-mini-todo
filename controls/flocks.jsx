@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-/* jshint node: true */
+/* jshint node: true, browser: true, newcap: false */
 
 'use strict';
 
@@ -7,11 +7,30 @@ if (typeof React === 'undefined') {
     var React = require('react');
 }
 
-var flContextTypes = {
-        root       : React.PropTypes.object,
-        depth      : React.PropTypes.number,
-        updater    : React.PropTypes.object,
-        flocks_ctx : React.PropTypes.object
+
+
+
+
+var clone = function(obj) {
+
+        if ((null === obj) || ('object' != typeof obj)) { return obj; }
+
+        var copy = obj.constructor();
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) { copy[attr] = obj[attr]; }
+        }
+
+        return copy;
+
+    }, // oh, javascript :|
+
+
+
+
+
+    flContextTypes = {
+        flocks_updater : React.PropTypes.object,
+        flocks_context : React.PropTypes.object
     },
 
     Mixin = {
@@ -19,25 +38,23 @@ var flContextTypes = {
         contextTypes      : flContextTypes,
         childContextTypes : flContextTypes,
 
+        componentWillMount: function() {
+            this.fctx = function() { return clone(this.context.flocks_context); };
+            this.fset = function() { return this.context.flocks_updater.set; };
+            this.fupd = function() { return this.context.flocks_updater; };
+        },
+
         getChildContext: function() {
 
             var defaultingContext = {};
-            for (var i in flContextTypes) {
-                // root is a special case; so is depth
-                if ((i !== 'root') && (i !== 'depth')) {
-                    defaultingContext[i] = (this.props[i] !== undefined)? this.props[i] : this.context[i];
-                }
-            }
-
-            // root auto-handles self-if-no-parent
-            defaultingContext.root = ((this.context.root === undefined)? this : this.context.root);
-
-            // root auto-handles depth too
-            defaultingContext.depth = ((this.context.depth === undefined)? 0 : this.context.depth + 1);
 
             // updater in props overrides contexts
-            if (typeof this.props.updater !== 'undefined') {
-                defaultingContext.updater = this.props.updater;
+            if (typeof this.props.flocks_context !== 'undefined') {
+                defaultingContext.flocks_context = this.props.flocks_context;
+            }
+
+            if (typeof this.props.flocks_updater !== 'undefined') {
+                defaultingContext.flocks_updater = this.props.flocks_updater;
             }
 
             return defaultingContext;
@@ -45,24 +62,29 @@ var flContextTypes = {
         }
     },
 
+
+
+
+
     create = function(Options) {
 
         var currentData      = {},
+            prevData         = {},
             updatesBlocked   = false,
             dirty            = false,
 
-            handler          = Options.before || function() { return true; },
-            finalizer        = Options.after  || function() { return; },
+            handler          = Options.before || function(C,P) { return true; },
+            finalizer        = Options.after  || function(C,P) { return null; },
             TargetTag        = Options.target,
             RenderDescriptor = Options.control,
 
             isArray = function(maybeArray) {
-                return (Object.prototype.toString.call(maybeArray) === "[object Array]");
+                return (Object.prototype.toString.call(maybeArray) === '[object Array]');
             },
 
             isNonArrayObject = function(maybeArray) {
                 if (typeof maybeArray !== 'object')                                  { return false; }
-                if (Object.prototype.toString.call(maybeArray) === "[object Array]") { return false; }
+                if (Object.prototype.toString.call(maybeArray) === '[object Array]') { return false; }
                 return true;
             },
 
@@ -88,24 +110,27 @@ var flContextTypes = {
             },
 
             updateIfWanted = function() {
+
                 if (updatesBlocked) {
                     dirty = true;
+                    return null;
                 } else {
 
-                    var clone = function(obj) {
-                            if (null == obj || "object" != typeof obj) return obj;
-                            var copy = obj.constructor();
-                            for (var attr in obj) {
-                                if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-                            }
-                            return copy;
-                        }, // oh, javascript :|
+                    if (!(handler(currentData, prevData))) {
+                        currentData = prevData;
+                        return false;
+                    }
 
-                        cdata            = clone(currentData);
+                    var cdata            = clone(currentData);
                         cdata.flocks_ctx = currentData;
 
+                    finalizer(currentData, prevData);
+
+                    prevData             = clone(currentData);
+
                     React.renderComponent(RenderDescriptor(cdata), TargetTag);
-                    dirty = false;
+                    dirty                = false;
+                    return true;
 
                 }
             },
@@ -128,7 +153,7 @@ var flContextTypes = {
                 }
 
                 parent[CurPath[CurPath.length-1]] = Val;
-                updateIfWanted();
+                return updateIfWanted();
             },
 
             setByObject = function(NaObject) {
@@ -136,7 +161,7 @@ var flContextTypes = {
                 if (handler(NaObject)) {
                     currentData = NaObject;
                 }
-                updateIfWanted();
+                return updateIfWanted();
             },
 
             setByPath = function(Path, Value) {
@@ -154,8 +179,7 @@ var flContextTypes = {
                     currentData[Key] = Value;
                 }
 
-                updateIfWanted();
-                return;
+                return updateIfWanted();
             };
 
         if (typeof TargetTag        === 'undefined') { throw 'flocks fatal error: must set a target'; }
@@ -176,7 +200,7 @@ var flContextTypes = {
                 if      (typeof Key === 'string') { setByKey(Key, Value); }
                 else if (isArray(Key))            { setByPath(Key, Value); }
                 else if (isNonArrayObject(Key))   { setByObject(Key); }
-                else                              { throw "Flocks.set/2 key must be a string or an array"; }
+                else                              { throw 'Flocks.set/2 key must be a string or an array'; }
 
             },
 
@@ -203,7 +227,7 @@ var flContextTypes = {
                     }
                 }
 
-                updateIfWanted();
+                return updateIfWanted();
 
             },
 
@@ -211,20 +235,19 @@ var flContextTypes = {
                 if (handler({})) {
                     currentData = {};
                 }
-                updateIfWanted();
-                return;
+                return updateIfWanted();
             },
 
             // lock and unlock aren't subject to handling
             lock: function() {
                 updatesBlocked = true;
-                return;
+                return true;
             },
 
+            // lock and unlock aren't subject to handling
             unlock: function() {
                 updatesBlocked = false;
-                updateIfWanted();
-                return;
+                return updateIfWanted();
             }
 
         };

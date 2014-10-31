@@ -9,9 +9,9 @@ var fmtPriorityCell = React.createClass({
 
   render: function() {
 
-    var uf    = this.context.updater.set,
+    var uf    = this.context.flocks_updater.set,
         index = this.props.index,
-        prio  = this.props.priority || 0,
+        prio  = this.fctx().todoList[index].priority || 0,
 
         upPriority = function() {
           uf( ['data', 'todoList', index, 'priority'], prio+1 );

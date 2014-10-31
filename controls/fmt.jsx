@@ -11,9 +11,11 @@ var FlocksMiniTodoHost = React.createClass({
 });
 
 var Target       = document.getElementById('bodyid'),
-    AppConfig    = { target: Target, control: FlocksMiniTodoHost },
+    Handle       = function(C,P) { return true; },
+    Finalize     = function(C,P) { return true; },
+    AppConfig    = { target: Target, control: FlocksMiniTodoHost, before: Handle, after: Finalize },
     Updater      = window.flocksjs.create(AppConfig);
 
-var InitialState = {updater: Updater, data: TempData, config: {showdeleted: false, showdone: true} };
+var InitialState = {flocks_updater: Updater, data: TempData, flocks_context: TempData, config: {showdeleted: false, showdone: true} };
 
 Updater.set(InitialState);  // from tempdata.js

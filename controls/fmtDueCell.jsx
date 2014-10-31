@@ -9,11 +9,13 @@ var fmtDueCell = React.createClass({
 
   render: function() {
 
+    var due = this.fctx().todoList[this.props.index].due;
+
     return (
       <td className="duecell">{
-        (typeof this.props.due === 'undefined') ?
+        (typeof due === 'undefined') ?
           ''
-        : new Date(this.props.due).toDateString()
+        : new Date(due).toDateString()
       }</td>
     );
 

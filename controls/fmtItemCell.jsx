@@ -11,7 +11,7 @@ var fmtItemCell = React.createClass({
 
     return (
       <td className="itemCell">
-        <a href="javascript:void(0)">{this.props.item}</a>
+        <a href="javascript:void(0)">{this.fctx().todoList[this.props.index].item}</a>
       </td>
     );
 

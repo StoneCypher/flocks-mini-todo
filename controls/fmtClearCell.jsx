@@ -9,17 +9,17 @@ var fmtClearCell = React.createClass({
 
   render: function() {
 
-    var uf      = this.context.updater.set,
-        idx     = this.props.index,
-        done    = this.props.done,
-        deleted = this.props.deleted,
+    var uf      = this.context.flocks_updater.set,
+        index   = this.props.index,
+        done    = this.fctx().todoList[index].done,
+        deleted = this.fctx().todoList[index].deleted,
 
         toggleDone = function() {
-          uf( ['data', 'todoList', idx, 'done'], !done )
+          uf( ['data', 'todoList', index, 'done'], !done );
         },
 
         toggleDeleted = function() {
-          uf( ['data', 'todoList', idx, 'deleted'], !deleted )
+          uf( ['data', 'todoList', index, 'deleted'], !deleted );
         };
 
     return (
