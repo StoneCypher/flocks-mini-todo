@@ -9,27 +9,26 @@ var fmtTopBar = React.createClass({
 
   render: function() {
 
+    console.log(this.fctx());
+
     var uf          = this.context.flocks_updater.set,
-        showdone    = this.props.showdone,
-        showdeleted = this.props.showdeleted,
+        showdone    = this.fctx().showdone,
+        showdeleted = this.fctx().showdeleted,
 
         toggleShowDeleted = function() {
-          uf( ['config', 'showdeleted'], !showdeleted );
+          uf('showdeleted', !showdeleted);
         },
 
         toggleShowDone = function() {
-          uf( ['config', 'showdone'], !showdone );
+          uf('showdone', !showdone);
         };
 
     return (
       <div id="topbar">
         <a target="_blank" href="https://github.com/StoneCypher/flocks-mini-todo" className="logo">Flocks Mini-Todo</a>
-        <fmtCheckLabel checked={this.props.showdone} label="Show completed" changeHandler={toggleShowDone} />
-        <fmtCheckLabel checked={this.props.showdeleted} label="Show deleted" changeHandler={toggleShowDeleted} />
-        { this.props.showdeleted?
-          <button id="emptyTrash">Empty Trash</button>
-          : ''
-        }
+        <fmtCheckLabel checked={showdone} label="Show completed" changeHandler={toggleShowDone} />
+        <fmtCheckLabel checked={showdeleted} label="Show deleted" changeHandler={toggleShowDeleted} />
+        { showdeleted? <button id="emptyTrash">Empty Trash</button> : '' }
       </div>
     );
 

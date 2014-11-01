@@ -40,7 +40,7 @@ var fmtApp = React.createClass({
   sortRows: function(OldRows) {
 
     var Rows = OldRows;
-    Rows.sort(this.props.overdueWins? this.todoPriorityPredicateOverdueWins : this.todoPriorityPredicate);
+    Rows.sort(this.fctx().overdueWins? this.todoPriorityPredicateOverdueWins : this.todoPriorityPredicate);
 
     return Rows;
 
@@ -50,12 +50,12 @@ var fmtApp = React.createClass({
 
   render: function() {
 
-    var SortedRows = this.sortRows(this.props.data.todoList);
+    var SortedRows = this.sortRows(this.fctx().todoList);
 
     return (
       <div id="main">
-        <fmtTopBar showdone={this.props.config.showdone} showdeleted={this.props.config.showdeleted} />
-        <fmtTodoTable showdone={this.props.config.showdone} showdeleted={this.props.config.showdeleted} rowdata={SortedRows} />
+        <fmtTopBar />
+        <fmtTodoTable rowdata={SortedRows} />
       </div>
     );
 
