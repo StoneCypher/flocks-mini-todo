@@ -2,11 +2,10 @@
 
 function undefComp(X,Y) {
 
-  return (X === undefined)? (
-    ( (Y === undefined)?  0 : 1       )
-  ) : (
-    ( (Y === undefined)? -1 : ((X === Y)? 0 : ((X < Y)? -1 : 1)) )
-  );
+  if (X === undefined) { X = 0; }
+  if (Y === undefined) { Y = 0; }
+
+  return ( (Y === undefined)? -1 : ((X === Y)? 0 : ((X < Y)? -1 : 1)) );
 
 }
 
@@ -14,10 +13,9 @@ function undefComp(X,Y) {
 
 function undefDescComp(X,Y) {
 
-  return (X === undefined)? (
-    ( (Y === undefined)?  0 : 1       )
-  ) : (
-    ( (Y === undefined)? -1 : ((X === Y)? 0 : ((X < Y)? 1 : -1)) )
-  );
+  if (X === undefined) { X = 0; }
+  if (Y === undefined) { Y = 0; }
+
+  return ( (Y === undefined)? -1 : ((X === Y)? 0 : ((X < Y)? 1 : -1)) );
 
 }
