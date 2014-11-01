@@ -5,13 +5,14 @@
 
 var fmtClearCell = React.createClass({
 
-  mixins: [ window.flocksjs.member ],
+  mixins       : [ window.flocksjs.member ],
+  contextTypes : { index : React.PropTypes.number },
 
   render: function() {
 
     var uf      = this.context.flocks_updater.set,
 
-        index   = this.props.index,
+        index   = this.context.index,
         item    = this.fctx().todoList[index],
 
         done    = item.done,

@@ -7,6 +7,13 @@ var fmtRow = React.createClass({
 
   mixins: [ window.flocksjs.member ],
 
+  contextTypes      : { index : React.PropTypes.number },
+  childContextTypes : { index : React.PropTypes.number },
+
+  getChildContext: function() {
+    return { index: this.props.index };
+  },
+
   render: function() {
 
     var index     = this.props.index,
@@ -23,10 +30,10 @@ var fmtRow = React.createClass({
     return (
 
       <tr className={className}>
-        <fmtClearCell index={index} />
-        <fmtItemCell index={index} />
-        <fmtPriorityCell index={index} />
-        <fmtDueCell index={index} />
+        <fmtClearCell />
+        <fmtItemCell />
+        <fmtPriorityCell />
+        <fmtDueCell />
       </tr>
 
     );

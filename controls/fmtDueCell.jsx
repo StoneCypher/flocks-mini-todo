@@ -5,11 +5,13 @@
 
 var fmtDueCell = React.createClass({
 
-  mixins: [ window.flocksjs.member ],
+  mixins       : [ window.flocksjs.member ],
+  contextTypes : { index : React.PropTypes.number },
+
 
   render: function() {
 
-    var due = this.fctx().todoList[this.props.index].due;
+    var due = this.fctx().todoList[this.context.index].due;
 
     return (
       <td className="duecell">{

@@ -5,12 +5,15 @@
 
 var fmtPriorityCell = React.createClass({
 
-  mixins: [ window.flocksjs.member ],
+  mixins       : [ window.flocksjs.member ],
+  contextTypes : { index : React.PropTypes.number },
 
   render: function() {
 
+    console.log(JSON.stringify(this.context));
+
     var uf    = this.context.flocks_updater.set,
-        index = this.props.index,
+        index = this.context.index,
         item  = this.fctx().todoList[index],
         prio  = item.priority || 0,
 

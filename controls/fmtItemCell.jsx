@@ -5,11 +5,12 @@
 
 var fmtItemCell = React.createClass({
 
-  mixins: [ window.flocksjs.member ],
+  mixins       : [ window.flocksjs.member ],
+  contextTypes : { index : React.PropTypes.number },
 
   render: function() {
 
-    var itemText = this.fctx().todoList[this.props.index].item;
+    var itemText = this.fctx().todoList[this.context.index].item;
 
     return (
       <td className="itemCell">
