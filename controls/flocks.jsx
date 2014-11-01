@@ -51,6 +51,7 @@ var clone = function(obj) {
             // updater in props overrides contexts
             if (typeof this.props.flocks_context !== 'undefined') {
                 defaultingContext.flocks_context = this.props.flocks_context;
+                delete defaultingContext.flocks_context.flocks_context;
             }
 
             if (typeof this.props.flocks_updater !== 'undefined') {
@@ -121,8 +122,8 @@ var clone = function(obj) {
                         return false;
                     }
 
-                    var cdata            = clone(currentData);
-                        cdata.flocks_ctx = currentData;
+                    var cdata                = clone(currentData);
+                        cdata.flocks_context = currentData;
 
                     finalizer(currentData, prevData);
 
@@ -145,11 +146,16 @@ var clone = function(obj) {
                 return parent[CurPath[CurPath.length-1]];
             },
 
-            pathSet = function(CurPath, CurTgt, Val) {
-                var parent = CurTgt;
+            pathSet = function(CurPath, Val) {
 
-                for (var i = 0; i < CurPath.length-1; i += 1) {
-                    parent = parent[CurPath[i]];
+                var parent = currentData;
+
+                if (CurPath.length === 1) {
+                    parent[CurPath[0]] = Val;
+                } else {
+                    for (var i = 0; i < CurPath.length-1; i += 1) {
+                        parent = parent[CurPath[i]];
+                    }
                 }
 
                 parent[CurPath[CurPath.length-1]] = Val;
@@ -166,7 +172,7 @@ var clone = function(obj) {
 
             setByPath = function(Path, Value) {
                 enforceArray(Path, 'Flock.path_set must take an array for its path');
-                return pathSet(Path, currentData, Value);
+                return pathSet(Path, Value);
             },
 
             setByKey = function(Key, Value) {
@@ -205,12 +211,9 @@ var clone = function(obj) {
             },
 
             init: function(InitObj) {
-                console.log('entered');
-//                this.lock();
                 InitObj.flocks_context = clone(InitObj);
                 this.set(InitObj);
                 this.set('flocks_updater', this);
-//                this.unlock();
             },
 
             // get isn't subject to handling

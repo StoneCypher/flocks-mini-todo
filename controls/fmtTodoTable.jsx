@@ -13,8 +13,8 @@ var fmtTodoTable = React.createClass({
 
     var Rows = [],
         Now  = new Date().getTime(),
-        sdon = this.props.showdone || false,    // whargarbl
-        sdel = this.props.showdeleted || false;
+        sdon = this.fctx().showdone || false,    // whargarbl
+        sdel = this.fctx().showdeleted || false;
 
     InData.map(function(Item, Idx) {
 
