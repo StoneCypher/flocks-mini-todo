@@ -39,6 +39,7 @@ var fmtApp = React.createClass({
 
   sortRows: function(OldRows) {
 
+    console.log('r1');
     var Rows = OldRows;
     Rows.sort(this.fctx().overdueWins? this.todoPriorityPredicateOverdueWins : this.todoPriorityPredicate);
 
@@ -50,7 +51,8 @@ var fmtApp = React.createClass({
 
   render: function() {
 
-    var SortedRows = this.sortRows(this.fctx().todoList);
+    console.log(this.fctx());
+    var SortedRows = this.sortRows(this.fctx().todoList || []);
 
     return (
       <div id="main">

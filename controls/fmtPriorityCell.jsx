@@ -15,11 +15,11 @@ var fmtPriorityCell = React.createClass({
         prio  = item.priority || 0,
 
         upPriority = function() {
-          uf( ['data', 'todoList', index, 'priority'], prio+1 );
+          uf( ['todoList', index, 'priority'], prio+1 );
         },
 
         downPriority = function() {
-          uf( ['data', 'todoList', index, 'priority'], prio-1 );
+          uf( ['todoList', index, 'priority'], prio-1 );
         };
 
     return (

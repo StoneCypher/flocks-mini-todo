@@ -70,7 +70,7 @@ var clone = function(obj) {
 
         var currentData      = {},
             prevData         = {},
-            updatesBlocked   = false,
+            updatesBlocked   = 0,
             dirty            = false,
 
             handler          = Options.before || function(C,P) { return true; },
@@ -195,13 +195,22 @@ var clone = function(obj) {
 
             member_set: setByKey,
 
-            set: function(Key, Value) {
+            set: function(Key, MaybeValue) {
 
-                if      (typeof Key === 'string') { setByKey(Key, Value); }
-                else if (isArray(Key))            { setByPath(Key, Value); }
+                if      (typeof Key === 'string') { setByKey(Key, MaybeValue); }
+                else if (isArray(Key))            { setByPath(Key, MaybeValue); }
                 else if (isNonArrayObject(Key))   { setByObject(Key); }
                 else                              { throw 'Flocks.set/2 key must be a string or an array'; }
 
+            },
+
+            init: function(InitObj) {
+                console.log('entered');
+//                this.lock();
+                InitObj.flocks_context = clone(InitObj);
+                this.set(InitObj);
+                this.set('flocks_updater', this);
+//                this.unlock();
             },
 
             // get isn't subject to handling
@@ -240,14 +249,14 @@ var clone = function(obj) {
 
             // lock and unlock aren't subject to handling
             lock: function() {
-                updatesBlocked = true;
+                updatesBlocked += 1;
                 return true;
             },
 
             // lock and unlock aren't subject to handling
             unlock: function() {
-                updatesBlocked = false;
-                return updateIfWanted();
+                updatesBlocked -= 1;
+                return (updatesBlocked > 0)? updateIfWanted() : false;
             }
 
         };

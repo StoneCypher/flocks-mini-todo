@@ -18,11 +18,11 @@ var fmtClearCell = React.createClass({
         deleted = item.deleted,
 
         toggleDone = function() {
-          uf( ['data', 'todoList', index, 'done'], !done );
+          uf( ['todoList', index, 'done'], !done );
         },
 
         toggleDeleted = function() {
-          uf( ['data', 'todoList', index, 'deleted'], !deleted );
+          uf( ['todoList', index, 'deleted'], !deleted );
         };
 
     return (

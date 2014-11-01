@@ -16,12 +16,9 @@ var Target       = document.getElementById('bodyid'),
     AppConfig    = { target: Target, control: FlocksMiniTodoHost, before: Handle, after: Finalize },
     Updater      = window.flocksjs.create(AppConfig);
 
-var InitialState = {
-    flocks_updater: Updater,
-    data: TempData,
-    flocks_context: TempData,
-    showdeleted: false,
-    showdone: true
-};
+TempData.showdeleted = false;
+TempData.showdone    = true;
 
-Updater.set(InitialState);  // from tempdata.js
+TempData.flocks_updater = Updater;   // whargarbl
+
+Updater.init(TempData);  // from tempdata.js

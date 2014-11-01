@@ -9,18 +9,18 @@ var fmtTopBar = React.createClass({
 
   render: function() {
 
-    console.log(this.fctx());
+    console.log('topbar ctx: ' + JSON.stringify(this.fctx()));
 
-    var uf          = this.context.flocks_updater.set,
+    var tbThis      = this,
         showdone    = this.fctx().showdone,
         showdeleted = this.fctx().showdeleted,
 
         toggleShowDeleted = function() {
-          uf('showdeleted', !showdeleted);
+          tbThis.fset(['showdeleted'], !showdeleted);
         },
 
         toggleShowDone = function() {
-          uf('showdone', !showdone);
+          tbThis.fset(['showdone'], !showdone);
         };
 
     return (
